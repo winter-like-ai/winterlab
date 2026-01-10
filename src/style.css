@@ -1,0 +1,125 @@
+@import "tailwindcss";
+
+:root {
+  /* Default: Light Mode (Elegant Winter Snow) */
+  --color-bg-base: #f5f2eb;       /* Cosmic Latte / Warm White */
+  --color-text-base: #334155;     /* Slate 700 */
+  --color-accent-blue: #0ea5e9;   /* Sky 500 */
+  --color-accent-soft: #cbd5e1;   /* Slate 300 */
+  --color-accent-highlight: #f472b6; /* Pink 400 */
+  --color-accent-gold: #fbbf24;   /* Amber 400 */
+  --color-card-bg: #ffffff;       /* Pure White for Modules */
+  --scrollbar-track: #e2e8f0;
+  --scrollbar-thumb: #94a3b8;
+}
+
+:root.dark {
+  /* Dark Mode: Romantic Winter Night */
+  --color-bg-base: #0f172a;       /* Slate 900 */
+  --color-text-base: #f8fafc;     /* Slate 50 */
+  --color-accent-blue: #bfdbfe;   /* Blue 200 */
+  --color-accent-soft: #e2e8f0;   /* Slate 200 */
+  --color-accent-highlight: #f472b6; /* Pink 400 */
+  --color-accent-gold: #fcd34d;   /* Amber 300 */
+  --color-card-bg: rgba(255, 255, 255, 0.03); /* Translucent White for Modules */
+  --scrollbar-track: rgba(15, 23, 42, 0.5);
+  --scrollbar-thumb: rgba(191, 219, 254, 0.3);
+}
+
+@theme {
+  --color-winter-dark: var(--color-bg-base);
+  --color-winter-cream: var(--color-text-base);
+  --color-winter-blue: var(--color-accent-blue);
+  --color-winter-brown: var(--color-accent-soft);
+  --color-winter-accent: var(--color-accent-highlight);
+  --color-winter-gold: var(--color-accent-gold);
+  --color-winter-card: var(--color-card-bg);
+
+  --font-display: 'Playfair Display', serif;
+  --font-body: 'Lato', sans-serif;
+  --font-mono: 'Fira Code', monospace;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500&family=Lato:wght@300;400;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap');
+
+body {
+  background-color: var(--color-winter-dark);
+  color: var(--color-winter-cream);
+  font-family: var(--font-body);
+  font-weight: 300;
+  transition: background-color 1.5s cubic-bezier(0.4, 0, 0.2, 1), color 1s ease;
+}
+
+/* Background Gradients */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  pointer-events: none;
+  background-image: 
+    radial-gradient(circle at 15% 50%, rgba(76, 29, 149, 0.15) 0%, transparent 25%),
+    radial-gradient(circle at 85% 30%, rgba(56, 189, 248, 0.10) 0%, transparent 25%);
+  transition: opacity 1.5s ease;
+  opacity: 1;
+}
+
+:root:not(.dark) body::before {
+  opacity: 0.6; /* Lighter gradient in day mode */
+  background-image: 
+    radial-gradient(circle at 20% 20%, rgba(245, 158, 11, 0.08) 0%, transparent 40%),
+    radial-gradient(circle at 80% 80%, rgba(244, 114, 182, 0.08) 0%, transparent 40%);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display);
+  letter-spacing: 0.05em;
+}
+
+/* Custom Scrollbar - Refined */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--scrollbar-track);
+  transition: background 1s;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--scrollbar-thumb);
+  border-radius: 10px;
+  transition: background 0.3s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-winter-blue);
+}
+
+/* Glassmorphism Utilities */
+.glass {
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  transition: background 0.5s, border-color 0.5s;
+}
+
+:root:not(.dark) .glass {
+  background: rgba(255, 255, 255, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+.glass-hover:hover {
+  background: rgba(255, 255, 255, 0.07);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+:root:not(.dark) .glass-hover:hover {
+  background: rgba(255, 255, 255, 0.8);
+  border-color: rgba(14, 165, 233, 0.2);
+}
