@@ -19,10 +19,15 @@
               <h2 class="text-5xl md:text-6xl font-bold mb-4 text-winter-cream tracking-tight font-display italic">
                 Winter<span class="text-transparent bg-clip-text bg-gradient-to-r from-winter-blue to-winter-accent">Lab</span>
               </h2>
-              <p class="text-winter-cream/80 text-lg font-light leading-relaxed max-w-lg mx-auto tracking-wide">
+              <p class="text-winter-cream/80 text-lg font-light leading-relaxed max-w-lg mx-auto tracking-wide mb-8">
                 Code crafted in silence,<br>
                 sparking warmth in the digital cold.
               </p>
+              <div class="flex justify-center gap-4">
+                <a href="/ppt.html" class="px-8 py-3 bg-gradient-to-r from-winter-blue to-winter-accent text-winter-dark font-bold rounded-full hover:opacity-90 transition-opacity shadow-lg shadow-winter-blue/20">
+                  查看雀宝分析助手
+                </a>
+              </div>
             </div>
           </div>
 

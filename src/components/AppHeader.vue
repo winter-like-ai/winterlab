@@ -22,7 +22,7 @@
 
       <!-- PPT Button - 修改后：所有设备可见 -->
       <a href="/ppt.html" class="block px-4 py-2 bg-gradient-to-r from-winter-blue to-winter-accent text-winter-cream text-sm font-bold rounded-lg hover:shadow-[0_0_20px_rgba(122,162,247,0.4)] transition-all duration-300 hover:scale-105">
-        查看PPT
+        查看雀宝分析助手
       </a>
 
       <!-- Theme Switcher -->
