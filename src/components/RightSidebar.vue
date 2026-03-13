@@ -38,13 +38,15 @@
 
     <!-- Timeline -->
     <div class="flex-1 overflow-y-auto pr-2 custom-scrollbar">
-      <h3 class="text-xs font-bold text-winter-blue mb-4 uppercase sticky top-0 bg-winter-dark py-2">Timeline</h3>
+      <h3 class="text-xs font-bold text-winter-blue mb-4 uppercase sticky top-0 bg-winter-dark py-2">ArXiv CS Papers</h3>
       <div class="relative border-l border-winter-blue/20 ml-2 space-y-6 pl-4">
-        <div v-for="(event, index) in timeline" :key="index" class="relative">
-          <div class="absolute -left-[21px] top-1 w-3 h-3 rounded-full bg-winter-dark border border-winter-blue"></div>
-          <div class="text-xs text-winter-brown font-mono mb-1">{{ event.time }}</div>
-          <div class="text-sm text-winter-cream font-medium">{{ event.title }}</div>
-          <div class="text-xs text-winter-cream/50 mt-1">{{ event.desc }}</div>
+        <div v-for="(paper, index) in timeline" :key="index" class="relative group">
+          <div class="absolute -left-[21px] top-1 w-3 h-3 rounded-full bg-winter-dark border border-winter-blue group-hover:bg-winter-blue transition-colors"></div>
+          <div class="text-xs text-winter-brown font-mono mb-1">{{ paper.time }}</div>
+          <a :href="paper.link" target="_blank" class="text-sm text-winter-cream font-medium hover:text-winter-blue transition-colors block leading-tight mb-1">
+            {{ paper.title }}
+          </a>
+          <div class="text-xs text-winter-cream/50 mt-1 leading-relaxed">{{ paper.desc }}</div>
         </div>
       </div>
     </div>
@@ -62,12 +64,21 @@ const serverStats = ref({
   temp: 'Loading...'
 })
 
-const timeline = [
-  { time: 'NOW', title: 'System Update', desc: 'Deploying new architecture patch v2.1' },
-  { time: '2 HOURS AGO', title: 'Code Review', desc: 'Refactoring sidebar components' },
-  { time: 'YESTERDAY', title: 'New Post', desc: 'Published "Winter Design Systems"' },
-  { time: '2 DAYS AGO', title: 'Project Init', desc: 'WinterLab repository created' },
-]
+const timeline = ref([])
+
+const fetchPapers = async () => {
+  try {
+    const res = await fetch('/api/papers')
+    if (!res.ok) throw new Error('API Error')
+    const data = await res.json()
+    timeline.value = data
+  } catch (e) {
+    console.error('Fetch papers error:', e)
+    timeline.value = [
+      { time: 'Error', title: 'Failed to load ArXiv stream', desc: 'Please check connection' }
+    ]
+  }
+}
 
 // Project Start Time: 2026-01-10 10:00:00 (Simulation)
 const startTime = new Date('2026-01-10T10:00:00').getTime()
@@ -105,6 +116,7 @@ let uptimeInterval
 onMounted(() => {
   fetchWeather() // Fetch immediately
   updateUptime() // Update immediately
+  fetchPapers()  // Fetch ArXiv papers
 
   interval = setInterval(() => {
     serverStats.value.latency = Math.floor(Math.random() * 50 + 10) + 'ms'

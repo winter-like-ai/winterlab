@@ -4,7 +4,7 @@
     <span class="text-winter-brown">user@winterlab</span>
     <span class="text-winter-cream">:~$</span>
     <div class="typing-effect flex-1">
-      <span class="text-gray-400">echo "Copyright © 2024 WinterLab. All rights reserved."</span>
+      <span class="text-gray-400">echo "Copyright © 2026 WinterLab. All rights reserved."</span>
       <span class="animate-pulse inline-block w-2 h-4 bg-winter-blue align-middle ml-1"></span>
     </div>
     <div class="hidden md:flex gap-4 opacity-50">

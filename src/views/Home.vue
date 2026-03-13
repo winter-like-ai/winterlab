@@ -58,12 +58,11 @@
               <span class="text-winter-gold text-xl">✦</span> Interactive Lab
             </h3>
           </div>
-          <div class="h-56 rounded-2xl border border-winter-blue/10 flex items-center justify-center bg-winter-card hover:bg-winter-cream/10 transition-all cursor-pointer group relative overflow-hidden">
-             <div class="absolute inset-0 bg-winter-blue/5 blur-3xl group-hover:bg-winter-accent/10 transition-colors duration-700"></div>
-             <div class="text-center relative z-10">
-               <div class="text-4xl mb-4 group-hover:scale-110 transition-transform duration-500 opacity-80">❄️</div>
-               <div class="text-sm text-winter-cream/60 group-hover:text-winter-cream uppercase tracking-widest font-light">Enter the Simulation</div>
-             </div>
+          <div class="h-96 rounded-2xl border border-winter-blue/10 bg-winter-card overflow-hidden shadow-2xl shadow-black/30 relative group">
+             <CyberParticles />
+
+             <!-- Hover Overlay -->
+             <div class="absolute inset-0 bg-gradient-to-t from-winter-blue/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
           </div>
         </div>
 
@@ -85,4 +84,5 @@ import AppHeader from '../components/AppHeader.vue'
 import AppFooter from '../components/AppFooter.vue'
 import LeftSidebar from '../components/LeftSidebar.vue'
 import RightSidebar from '../components/RightSidebar.vue'
+import CyberParticles from '../components/CyberParticles.vue'
 </script>

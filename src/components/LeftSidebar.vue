@@ -11,22 +11,29 @@
     </div>
 
     <!-- Code Rain Effect -->
-    <div class="flex-1 relative rounded-lg border border-winter-blue/10 bg-winter-card overflow-hidden transition-colors duration-500">
+    <div class="flex-1 relative rounded-lg border border-winter-blue/10 bg-winter-card overflow-hidden transition-colors duration-500 mb-2">
        <canvas ref="matrixCanvas" class="absolute inset-0 w-full h-full opacity-30"></canvas>
        <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
          <span class="text-4xl font-bold text-winter-blue/10 dark:text-winter-cream/10 tracking-tighter rotate-90">SYSTEM</span>
        </div>
     </div>
 
-    <!-- Stats -->
-    <div class="grid grid-cols-2 gap-2">
-      <div class="bg-winter-card p-2 rounded border border-winter-blue/10">
-        <div class="text-[10px] text-winter-brown uppercase">CPU Load</div>
-        <div class="text-lg font-mono text-winter-blue">12%</div>
-      </div>
-      <div class="bg-winter-card p-2 rounded border border-winter-blue/10">
-        <div class="text-[10px] text-winter-brown uppercase">Memory</div>
-        <div class="text-lg font-mono text-winter-blue">4.2GB</div>
+    <!-- Stats: Market Indices -->
+    <div class="grid grid-cols-2 gap-2 mt-auto">
+      <div v-for="stock in stocks" :key="stock.symbol" class="bg-winter-card p-2 rounded border border-winter-blue/10 relative overflow-hidden h-16 flex flex-col justify-center">
+        <div class="text-[10px] text-winter-brown uppercase flex justify-between items-center z-10 relative">
+          <span>{{ stock.name }}</span>
+          <span :class="getStockColor(stock.change)" class="font-bold">
+            {{ stock.change >= 0 ? '+' : '' }}{{ stock.changePercent ? stock.changePercent.toFixed(2) : '0.00' }}%
+          </span>
+        </div>
+        <div class="text-lg font-mono text-winter-blue z-10 relative mt-1">
+          {{ stock.price ? stock.price.toFixed(2) : '---' }}
+        </div>
+        
+        <!-- Background Tint -->
+        <div class="absolute inset-0 opacity-10 pointer-events-none" 
+             :class="stock.change >= 0 ? 'bg-red-500' : 'bg-green-500'"></div>
       </div>
     </div>
   </div>
@@ -35,6 +42,29 @@
 <script setup>
 import { onMounted, ref, onUnmounted, watch } from 'vue'
 import * as THREE from 'three'
+
+// Market Data
+const stocks = ref([
+  { symbol: '000300.SS', name: 'CSI 300', price: 0, change: 0, changePercent: 0 },
+  { symbol: '^NDX', name: 'NASDAQ 100', price: 0, change: 0, changePercent: 0 }
+])
+let statsInterval
+
+const getStockColor = (change) => {
+  return change >= 0 ? 'text-red-500 dark:text-red-400' : 'text-green-500 dark:text-green-400'
+}
+
+const fetchStats = async () => {
+  try {
+    const res = await fetch('/api/stocks')
+    if (!res.ok) throw new Error('API Error')
+    const data = await res.json()
+    console.log('Fetched stocks in Vue:', data) // Debug
+    stocks.value = data
+  } catch (e) {
+    console.error('Fetch stocks error:', e) // Debug
+  }
+}
 
 // Theme Detection
 const isDark = ref(true)
@@ -167,6 +197,10 @@ onMounted(() => {
 
   initThree()
   initMatrix()
+  
+  // Start fetching stats
+  fetchStats()
+  statsInterval = setInterval(fetchStats, 10000)
   
   window.addEventListener('resize', handleResize)
 })
